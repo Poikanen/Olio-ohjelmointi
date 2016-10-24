@@ -21,8 +21,9 @@ public class Mainclass {
         //System.out.println(System.getProperty("user.dir"));
         
         ReadAndWriteIO filer = new ReadAndWriteIO();
-        //filer.readFile("input.txt");
+        filer.readFile("input.txt");
         filer.readAndWrite("input.txt", "output.txt");
+        filer.readZip("zipinput.zip");
      
         
     }

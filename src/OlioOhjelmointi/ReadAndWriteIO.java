@@ -5,11 +5,8 @@
  */
 package OlioOhjelmointi;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.zip.*;
 
 /**
  *
@@ -23,11 +20,13 @@ public class ReadAndWriteIO {
         
     }
     
-    public void readFile(String target)
+    public void readFile(String source)
     {
         try {
-            BufferedReader in = new BufferedReader(new FileReader(target));
+            BufferedReader in = new BufferedReader((new FileReader(source)));
             String inputLine = in.readLine();
+            
+            
             while (!(inputLine == null))
             {
                 
@@ -65,5 +64,43 @@ public class ReadAndWriteIO {
         catch (IOException i) {
             i.printStackTrace();
         }
+    }
+    public void readZip(String source)
+    {
+        String filename = "";
+        try
+        {
+            ZipInputStream zip = new ZipInputStream(new BufferedInputStream(new FileInputStream(source)));
+            ZipEntry entry;
+            BufferedOutputStream dest = null;
+            while ((entry = zip.getNextEntry()) != null)
+            {
+                if (entry.getName().contains(".txt") && !entry.getName().contains("MACOS"))
+                {
+                    filename = entry.getName();
+                    int BUFFER = 2048;
+                    FileOutputStream fos = new FileOutputStream(entry.getName());
+                    dest = new BufferedOutputStream(fos, BUFFER);
+                    byte data[] = new byte[BUFFER];
+                    int count;
+                    while((count = zip.read(data, 0, BUFFER)) != -1)
+                    {
+                        dest.write(data, 0, count);
+                    }
+                }
+                //System.out.println(entry.);
+            }
+            dest.flush();
+            dest.close();
+            zip.close();
+        }
+        catch (IOException i)
+        {
+            i.printStackTrace();
+        }
+        catch(Exception e) {
+         e.printStackTrace();
+        }
+        readFile(filename);
     }
 }
