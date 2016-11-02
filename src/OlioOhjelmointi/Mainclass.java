@@ -9,7 +9,7 @@ package OlioOhjelmointi;
 
 
 /**
- * Viikko 5 tehtävät
+ * Viikko 6 tehtävät
  * @author Tommi Wäänänen
  */
 public class Mainclass {
@@ -18,13 +18,8 @@ public class Mainclass {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //System.out.println(System.getProperty("user.dir"));
         
-        ReadAndWriteIO filer = new ReadAndWriteIO();
-        filer.readFile("input.txt");
-        filer.readAndWrite("input.txt", "output.txt");
-        filer.readZip("zipinput.zip");
-     
-        
+        Car car = new Car();
+        car.print();
     }
 }
