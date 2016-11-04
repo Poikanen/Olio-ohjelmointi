@@ -31,6 +31,10 @@ public class Mainclass {
     public static void main(String[] args) {
         //MainClassista uusi instanssi
         //tämä poisti ongelmia esim viikon 6 tehtävissä
+        Bank bank = new Bank();
+        bank.run();
+    }
+        /*
         try{
         Mainclass program = new Mainclass();
         program.run(args);
@@ -46,11 +50,20 @@ public class Mainclass {
             mainMenu();
         }
     }
+    */
+}
+
+class Bank{
+    private ArrayList<Account> accounts;
+    private BufferedReader br;
+    public Bank()
+    {
+        accounts = new ArrayList<>();
+        br = new BufferedReader(new InputStreamReader(System.in));
+    }
     
-    //Voiko MainClassille tehdä rakentajan? Nyt tässä avoimesti.
-    int userChoise =-1;
-    ArrayList<Account> accounts = new ArrayList<>();
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public void run ()
+    {while (true){mainMenu();}}
     
     //päälooppi
     public void mainMenu()
