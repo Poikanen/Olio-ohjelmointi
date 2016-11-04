@@ -34,61 +34,7 @@ public class Bank{
             return "";
         }
     }
-    
-    public void printStuff(int i)
-    {
-        if (i == 1)
-        {
-            System.out.print("Syötä tilinumero: ");
-            String tili = getChoise();
-            System.out.print("Syötä rahamäärä: ");
-            int raha = Integer.parseInt(getChoise());
-            System.out.println("Pankkiin lisätään: "+tili+","+raha);
-        }
-        else if (i == 2)
-        {
-            System.out.print("Syötä tilinumero: ");
-            String tili = getChoise();
-            System.out.print("Syötä rahamäärä: ");
-            int raha = Integer.parseInt(getChoise());
-            System.out.print("Syötä luottoraja: ");
-            int luotto = Integer.parseInt(getChoise());
-            System.out.println("Pankkiin lisätään: "+tili+","+raha+","+luotto);
-        }
-        else if (i == 3)
-        {
-            System.out.print("Syötä tilinumero: ");
-            String tili = getChoise();
-            System.out.print("Syötä rahamäärä: ");
-            int raha = Integer.parseInt(getChoise());
-            System.out.println("Talletetaan tilille: "+tili+" rahaa "+raha);
-        }
-        else if (i == 4)
-        {
-            System.out.print("Syötä tilinumero: ");
-            String tili = getChoise();
-            System.out.print("Syötä rahamäärä: ");
-            int raha = Integer.parseInt(getChoise());
-            System.out.println("Nostetaan tililtä: "+tili+" rahaa "+raha);
-        }
-        else if (i == 5)
-        {
-            System.out.print("Syötä poistettava tilinumero: ");
-            String tili = getChoise();
-            System.out.println("Tili poistettu.");
-        }
-        else if (i == 6)
-        {
-            System.out.print("Syötä tulostettava tilinumero: ");
-            String tili = getChoise();
-            System.out.println("Etsitään tiliä: "+tili);
-        }
-        else if (i == 7)
-        {
-            System.out.println("Kaikki tilit:");
-        }
-    }
-    
+
     public Account search (String n)
     {
         for (Account a : accounts)
@@ -110,10 +56,9 @@ public class Bank{
             accounts.add(new SavingsAccount(tili,raha));
         }
         else if (i == 2){
-            printStuff(2);
-//            System.out.print("Syötä luottoraja: ");
-//            int luotto = Integer.parseInt(getChoise());
-//            accounts.add(new CreditAccount(tili,raha,luotto));
+            System.out.print("Syötä luottoraja: ");
+            int luotto = Integer.parseInt(getChoise());
+            accounts.add(new CreditAccount(tili,raha,luotto));
         }
     }
     
@@ -133,7 +78,6 @@ public class Bank{
             System.out.print("Syötä tulostettava tilinumero: ");
             String tili = getChoise();
             search(tili).print();
-//            System.out.println("Etsitään tiliä: "+tili);
         }
         else if (i == 2)
         {

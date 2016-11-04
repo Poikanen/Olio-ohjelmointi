@@ -14,14 +14,14 @@ public abstract class Account
     protected String accountNumber;
     protected int balance;
     
-    public String getAccountNumber() {
+    public String getAccountNumber() 
+    {
         return accountNumber;
     }
-
-    public int getBalance() {
+    public int getBalance() 
+    {
         return balance;
     }
-
     public Account()
     {
         accountNumber = "Empty";
@@ -35,20 +35,17 @@ public abstract class Account
     public void addMoney(int m)
     {
         balance += m;
-//        System.out.println("Talletetaan tilille: "+accountNumber+" rahaa "+m);
     }
     public void withdrawMoney(int m)
     {
         if (balance > m){
         balance -=m;}
-//        System.out.println("Nostetaan tililtä: "+accountNumber+" rahaa "+m);
     }
     public void print()
     {
         System.out.println("Tilinumero: "+accountNumber+" Tilillä rahaa: "+balance);
     }
 }
-
 
 class SavingsAccount extends Account
 {
@@ -59,7 +56,7 @@ class SavingsAccount extends Account
     }
 }
 
-/*class CreditAccount extends Account
+class CreditAccount extends Account
 {
     private int credit;
     public CreditAccount()
@@ -71,19 +68,25 @@ class SavingsAccount extends Account
     {
         super(n,m);
         credit = c;
-        System.out.println("Pankkiin lisätään: "+accountNumber+","+balance+","+credit);
+        System.out.println("Tili luotu.");
     }
+    @Override
     public void withdrawMoney(int m)
     {
         if (balance > m){
         balance -=m;}
-        System.out.println("Nostetaan tililtä: "+accountNumber+" rahaa "+m);
+        else if (balance+credit > m)
+        {
+            balance -=m;
+        }
+        else 
+        {
+            System.out.println("Tilillä ei katetta.");
+        }
     }
     @Override
     public void print()
     {
-        System.out.println("Tilinumero: "+accountNumber);
-        System.out.println("Rahamäärä: "+balance);
-        System.out.println("Luotto: "+credit);
+        System.out.println("Tilinumero: "+accountNumber+" Tilillä rahaa: "+balance+" Luottoraja: "+credit);
     }
-}*/
+}

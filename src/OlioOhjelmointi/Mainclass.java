@@ -83,36 +83,9 @@ public class Mainclass {
                 System.out.println("Valinta ei kelpaa.");
                 break;
         }
-
-//        switch (choise) {
-//            case 1:
-//                printStuff(1);
-//                break;
-//            case 2:
-//                printStuff(2);
-//                break;
-//            case 3:
-//                printStuff(3);
-//                break;
-//            case 4:
-//                printStuff(4);
-//                break;
-//            case 5:
-//                printStuff(5);
-//                break;
-//            case 6:
-//                printStuff(6);
-//                break;
-//            case 7:
-//                printStuff(7);
-//                break;
-//            case 0:
-//                System.exit(0);
-//            default:
-//                System.out.println("Valinta ei kelpaa.");
-//                break;
-//        }
+        
     }
+    
     public String getChoise()
     {
         try{
