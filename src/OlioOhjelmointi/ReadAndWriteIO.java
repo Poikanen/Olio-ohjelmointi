@@ -20,8 +20,9 @@ public class ReadAndWriteIO {
         
     }
     
-    public void readFile(String source)
+    public String readFile(String source)
     {
+        String total ="";
         try {
             BufferedReader in = new BufferedReader((new FileReader(source)));
             String inputLine = in.readLine();
@@ -29,17 +30,43 @@ public class ReadAndWriteIO {
             
             while (!(inputLine == null))
             {
-                
+                total += (inputLine + "\n");
                 System.out.println(inputLine);
                 inputLine = in.readLine();
             }
             in.close();
+            return total;
             
         }
         catch (IOException i) {
             i.printStackTrace();
         }
+        return "";
     }
+    
+    //Write input string to output file
+    public String writeFile(String input, String output)
+    {
+        try {
+            BufferedReader in = new BufferedReader(new StringReader(input));
+            String inputLine = in.readLine();
+            BufferedWriter out = new BufferedWriter(new FileWriter(output));
+            while (inputLine != null)
+            {
+                out.write(inputLine + "\n");
+                inputLine = in.readLine();
+            }
+            in.close();
+            out.close();
+            return "File saved.";
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return "Action failed";
+            }
+    }
+    
+    // Write input file to output file
     public void readAndWrite(String source, String target)
     {
         
@@ -88,7 +115,6 @@ public class ReadAndWriteIO {
                         dest.write(data, 0, count);
                     }
                 }
-                //System.out.println(entry.);
             }
             dest.flush();
             dest.close();

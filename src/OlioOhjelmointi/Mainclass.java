@@ -14,12 +14,11 @@ import java.io.InputStreamReader;
  * Viikko 7 tehtävät
  * @author Tommi Wäänänen
  */
+/*
 public class Mainclass {
     private Bank bank = new Bank();
     private BufferedReader br;
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         try{
         Mainclass program = new Mainclass();
@@ -96,6 +95,8 @@ public class Mainclass {
             ex.printStackTrace();
             return "";
         }
-    }    
+    }
+
         
 }
+*/

@@ -22,10 +22,6 @@ public class BottleDispenser {
         money = 0.0;
         
         bottle_array = new ArrayList();
-//        for (int i =0;i<bottles;i++)
-//        {
-//            bottle_array.add(new Bottle());
-//        }
         bottle_array.add(new Bottle("Pepsi", "Pepsi Max", 0.5, 0.5, 1.8));
         bottle_array.add(new Bottle("Pepsi", "Pepsi Max", 0.5, 1.5, 2.2));
         bottle_array.add(new Bottle("Coca-Cola", "Coca-Cola Zero", 0.5, 0.5, 2.0));
