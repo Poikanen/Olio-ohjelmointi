@@ -37,8 +37,10 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void Button1Action(ActionEvent event) {
-        textArea.setText(textArea.getText() + "\n");
+        textArea.clear();
         textField.clear();
+        loadField.clear();
+        saveField.clear();
     }
     
     @Override
@@ -48,15 +50,14 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void updateFromTextField(KeyEvent event) {
-//                System.out.println("textfield");
                 textArea.setText(textArea.getText()+(event.getCharacter()));
+                textArea.setScrollTop(textArea.getText().length());
     }
 
     @FXML
     private void textFieldAction(ActionEvent event) {
-//        label.setText(label.getText()+textField.getText());
-//        label.setText(label.getText() +textField.getText()+ "\n");
         textArea.setText(textArea.getText() + "\n");
+        textArea.setScrollTop(textArea.getText().length());
         textField.clear();
     }
 
@@ -64,7 +65,6 @@ public class FXMLDocumentController implements Initializable {
     private void backSpaceAction(KeyEvent event) {
         if (event.getCode().equals(event.getCode().BACK_SPACE))
         {
-//            System.out.println("backspace");
             if (textArea.getText().length() > 0) {
                 textArea.setText(textArea.getText().substring(0,textArea.getText().length()-1));
             }
@@ -83,7 +83,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void loadFileAction(ActionEvent event) {
-        textArea.setText(io.readFile(loadField.getText()));
+//        textArea.setText(io.readFile(loadField.getText()));  // opens new
+        textArea.setText(textArea.getText() + io.readFile(loadField.getText())); // adds to old
     }
 
     @FXML

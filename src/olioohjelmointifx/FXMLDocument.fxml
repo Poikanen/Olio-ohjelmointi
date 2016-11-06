@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="513.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="olioohjelmointifx.FXMLDocumentController">
     <children>
-        <Button fx:id="button1" layoutX="394.0" layoutY="472.0" onAction="#Button1Action" text="New Line" />
+        <Button fx:id="button1" layoutX="394.0" layoutY="472.0" onAction="#Button1Action" prefHeight="27.0" prefWidth="81.0" text="Clear all" />
       <TextField fx:id="textField" layoutX="23.0" layoutY="472.0" onAction="#textFieldAction" onKeyPressed="#backSpaceAction" onKeyTyped="#updateFromTextField" prefHeight="27.0" prefWidth="363.0" promptText="Edit text" />
       <Button layoutX="428.0" layoutY="18.0" mnemonicParsing="false" onAction="#clearLoadFieldAction" text="Clear" />
       <Button layoutX="428.0" layoutY="60.0" mnemonicParsing="false" onAction="#clearSaveFieldAction" text="Clear" />
