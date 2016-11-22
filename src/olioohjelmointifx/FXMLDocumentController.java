@@ -14,9 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -36,6 +39,8 @@ public class FXMLDocumentController implements Initializable {
     private TextArea outputField;
     
     BottleDispenser d = BottleDispenser.getInstance();
+    @FXML
+    private Slider moneySlider;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -49,12 +54,18 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void insertMoney(ActionEvent event) {
-        outputField.setText(d.addMoney(1.23)+outputField.getText());
+        outputField.setText(d.addMoney(moneySlider.getValue())+outputField.getText());
+        moneySlider.setValue(1);
+        moneyButton.setText("Insert\n" + String.format("%.2f", moneySlider.getValue()));
     }
 
     @FXML
     private void returnMoney(ActionEvent event) {
         outputField.setText(d.returnMoney()+outputField.getText());
     }
-    
+
+    @FXML
+    private void updateSlider(MouseEvent event) {
+        moneyButton.setText("Insert\n" + String.format("%.2f", moneySlider.getValue()));
+    }
 }

@@ -39,7 +39,7 @@ public class BottleDispenser {
     public static String addMoney (double m)
     {
         money += m;
-        return "Klink! Lisättiin "+m+" rahaa laitteeseen!\n";
+        return "Klink! Lisättiin "+String.format("%.2f",m)+" rahaa laitteeseen!\n";
     }
     
     public static String buyBottle(int index)

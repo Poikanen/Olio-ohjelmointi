@@ -14,9 +14,10 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="moneyButton" layoutX="374.0" layoutY="166.0" mnemonicParsing="false" onAction="#insertMoney" prefHeight="48.0" prefWidth="110.0" text="Add Money" />
+      <Button fx:id="moneyButton" layoutX="374.0" layoutY="166.0" mnemonicParsing="false" onAction="#insertMoney" prefHeight="48.0" prefWidth="110.0" text="Insert&#10;1.00" />
       <Button fx:id="returnButton" layoutX="374.0" layoutY="276.0" mnemonicParsing="false" onAction="#returnMoney" prefHeight="48.0" prefWidth="110.0" text="Return Money" />
       <ComboBox fx:id="bottleDisplay" layoutX="21.0" layoutY="39.0" prefHeight="48.0" prefWidth="325.0" promptText="Select Bottle" />
       <TextArea fx:id="outputField" editable="false" layoutX="21.0" layoutY="114.0" prefHeight="373.0" prefWidth="325.0" promptText="Welcome! Buy a bottle of cool!" />
+      <Slider fx:id="moneySlider" blockIncrement="1.0" layoutX="352.0" layoutY="128.0" majorTickUnit="1.0" max="5.0" minorTickCount="4" onMouseDragged="#updateSlider" onMouseReleased="#updateSlider" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
    </children>
 </AnchorPane>
