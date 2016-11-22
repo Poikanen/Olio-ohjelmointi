@@ -13,13 +13,11 @@ import java.util.ArrayList;
  */
 public class BottleDispenser {
     private static BottleDispenser instance = null;
-    private static int bottles;
     private static double money;
     private static ArrayList<Bottle> bottle_array;
     
     private BottleDispenser () 
     {
-        bottles = 6;
         money = 0.0;
         
         bottle_array = new ArrayList();
@@ -33,47 +31,49 @@ public class BottleDispenser {
     
     public static BottleDispenser getInstance()
     {
-        if (instance == null)
-            instance = new BottleDispenser();
+        if (instance == null){
+            instance = new BottleDispenser();}
         return instance;
     }
     
-    public static void addMoney ()
+    public static String addMoney (double m)
     {
-        money += 1.0;
-        System.out.println("Klink! Lisää rahaa laitteeseen!");
+        money += m;
+        return "Klink! Lisättiin "+m+" rahaa laitteeseen!\n";
     }
     
-    public static void buyBottle(int index)
+    public static String buyBottle(int index)
     {
-        if (bottles >0 & money >= bottle_array.get(index-1).getPrice())
+        if (bottle_array.size() != 0 && money >= bottle_array.get(index-1).getPrice())
         {
             money -= bottle_array.get(index-1).getPrice();
-            System.out.println("KACHUNK! "+bottle_array.get(index-1).getName()+" tipahti masiinasta!");
-            bottles -= 1;
+            String tmp = "KACHUNK! "+bottle_array.get(index-1).getName()+" tipahti masiinasta!\n";
             bottle_array.remove(index-1);
+            return tmp;
         }
         else
         {
-            System.out.println("Syötä rahaa ensin!");
+            return "Syötä rahaa ensin!\n";
         }
     }
     
-    public static void returnMoney()
+    public static String returnMoney()
     {
         String rahat = String.format("%.2f",money);
-        System.out.println("Klink klink. Sinne menivät rahat! Rahaa tuli ulos " +rahat +"€");
         money = 0;
+        return "Klink klink. Sinne menivät rahat! Rahaa tuli ulos " + rahat +"€\n";
     }
     
     public static void listBottles()
     {
-        int i = 1;
-        for (Bottle bottle : bottle_array)
-        {
-            System.out.println(i + ". Nimi: " +bottle.getName());
-            System.out.println("	Koko: " + Double.toString(bottle.getVolume()) + "	Hinta: " + Double.toString(bottle.getPrice()));
-            i++;
+        if (bottle_array.size() != 0) {
+            int i = 1;
+            for (Bottle bottle : bottle_array)
+            {
+                System.out.println(i + ". Nimi: " +bottle.getName());
+                System.out.println("	Koko: " + Double.toString(bottle.getVolume()) + "	Hinta: " + Double.toString(bottle.getPrice()));
+                i++;
+            }
         }
     }
 }
