@@ -42,14 +42,22 @@ public class BottleDispenser {
         return "Klink! Lisättiin "+String.format("%.2f",m)+" rahaa laitteeseen!\n";
     }
     
-    public static String buyBottle(int index)
+    public static String buyBottle(Bottle b)
     {
-        if (bottle_array.size() != 0 && money >= bottle_array.get(index-1).getPrice())
+        if (bottle_array.size() != 0 && bottle_array.contains(b) && money >= b.getPrice())
         {
-            money -= bottle_array.get(index-1).getPrice();
-            String tmp = "KACHUNK! "+bottle_array.get(index-1).getName()+" tipahti masiinasta!\n";
-            bottle_array.remove(index-1);
+            money -= b.getPrice();
+            String tmp = "KACHUNK! "+b.getName()+" tipahti masiinasta!\n";
+            bottle_array.remove(b);
             return tmp;
+        }
+        else if (bottle_array.size() == 0)
+        {
+            return "Pullokone tyhjä!\n";
+        }
+        else if (b == null)
+        {
+            return "Valitse pullo!\n";
         }
         else
         {
@@ -61,7 +69,7 @@ public class BottleDispenser {
     {
         String rahat = String.format("%.2f",money);
         money = 0;
-        return "Klink klink. Sinne menivät rahat! Rahaa tuli ulos " + rahat +"€\n";
+        return "Klink klink! Rahaa tuli ulos " + rahat +"€\n";
     }
     
     public static void listBottles()
@@ -75,5 +83,9 @@ public class BottleDispenser {
                 i++;
             }
         }
+    }
+    public static ArrayList getBottleArray()
+    {
+        return bottle_array;
     }
 }

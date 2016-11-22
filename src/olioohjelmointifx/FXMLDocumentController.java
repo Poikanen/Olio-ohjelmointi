@@ -8,6 +8,7 @@ package olioohjelmointifx;
 import OlioOhjelmointi.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,19 +38,23 @@ public class FXMLDocumentController implements Initializable {
     private ComboBox<Bottle> bottleDisplay;
     @FXML
     private TextArea outputField;
-    
-    BottleDispenser d = BottleDispenser.getInstance();
     @FXML
     private Slider moneySlider;
+        
+    BottleDispenser d = BottleDispenser.getInstance();
+//    ObservableList<Bottle> cb;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         d = BottleDispenser.getInstance();
-    
+//        cb.addAll(d.getBottleArray());
+//        bottleDisplay.setItems(cb);
+        updateCombo();
     }
     @FXML
     private void buyBottle(ActionEvent event) {
-        outputField.setText(d.buyBottle(1)+outputField.getText());
+        outputField.setText(d.buyBottle(bottleDisplay.getValue())+outputField.getText());
+        updateCombo();
     }
 
     @FXML
@@ -67,5 +72,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void updateSlider(MouseEvent event) {
         moneyButton.setText("Insert\n" + String.format("%.2f", moneySlider.getValue()));
+    }
+    
+    private void updateCombo()
+    {
+        bottleDisplay.getItems().removeAll(bottleDisplay.getItems());
+        bottleDisplay.getItems().addAll(d.getBottleArray());
     }
 }

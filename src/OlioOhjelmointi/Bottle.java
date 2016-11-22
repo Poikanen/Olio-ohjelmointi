@@ -59,4 +59,9 @@ public class Bottle {
     {
         return volume;
     }
+    @Override
+    public String toString()
+    {
+        return name +" "+volume+"l";
+    }
 }
