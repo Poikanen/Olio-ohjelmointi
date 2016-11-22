@@ -12,11 +12,12 @@ import java.util.ArrayList;
  * @author tommi
  */
 public class BottleDispenser {
-    private int bottles;
-    private double money;
-    private ArrayList<Bottle> bottle_array;
+    private static BottleDispenser instance = null;
+    private static int bottles;
+    private static double money;
+    private static ArrayList<Bottle> bottle_array;
     
-    public BottleDispenser () 
+    private BottleDispenser () 
     {
         bottles = 6;
         money = 0.0;
@@ -30,13 +31,20 @@ public class BottleDispenser {
         bottle_array.add(new Bottle("Fanta", "Fanta Zero", 0.5, 0.5, 1.95));
     }
     
-    public void addMoney ()
+    public static BottleDispenser getInstance()
+    {
+        if (instance == null)
+            instance = new BottleDispenser();
+        return instance;
+    }
+    
+    public static void addMoney ()
     {
         money += 1.0;
         System.out.println("Klink! Lisää rahaa laitteeseen!");
     }
     
-    public void buyBottle(int index)
+    public static void buyBottle(int index)
     {
         if (bottles >0 & money >= bottle_array.get(index-1).getPrice())
         {
@@ -51,14 +59,14 @@ public class BottleDispenser {
         }
     }
     
-    public void returnMoney()
+    public static void returnMoney()
     {
         String rahat = String.format("%.2f",money);
         System.out.println("Klink klink. Sinne menivät rahat! Rahaa tuli ulos " +rahat +"€");
         money = 0;
     }
     
-    public void listBottles()
+    public static void listBottles()
     {
         int i = 1;
         for (Bottle bottle : bottle_array)

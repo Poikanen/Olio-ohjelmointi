@@ -23,6 +23,8 @@ If there's more, they form a team.
 Its dearest wish is just to fish
 In a quiet Poisson stream.
 
+olipa kerran viesti
+
 If you want to model networks
 Or a complex data flow
 A queue's the key to help you see
@@ -32,4 +34,4 @@ So the next time you feel lonely
 And wonder what to do,
 You'll soon feel fine if you join the line
 Of an analytic queue!
-Hullua hommaa tämä editointi
+olipa kerran viesti

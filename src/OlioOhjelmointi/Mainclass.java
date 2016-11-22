@@ -5,98 +5,79 @@
  */
 package OlioOhjelmointi;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+//import java.util.Scanner;
+
+import java.util.Scanner;
+
 
 
 /**
- * Viikko 7 tehtävät
+ * Viikko 9 tehtävät
  * @author Tommi Wäänänen
  */
-/*
 public class Mainclass {
-    private Bank bank = new Bank();
-    private BufferedReader br;
     
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
-        try{
-        Mainclass program = new Mainclass();
-        program.run(args);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    
-    public void run(String[] args) throws Exception
-    {
-        bank = new Bank();
-        br = new BufferedReader(new InputStreamReader(System.in));
-        while (true)
+        BottleDispenser dispenser;
+        dispenser = BottleDispenser.getInstance();
+        int userchoise = -1;
+        while (userchoise != 0)
         {
-            mainMenu();
+            userchoise = mainMenu();
+        if (userchoise == 0)
+        {break;}
+        else if (userchoise == 1)
+        {dispenser.addMoney();}
+        else if (userchoise == 2)
+        {
+            dispenser.listBottles();
+            userchoise = Integer.parseInt(getInput());
+            dispenser.buyBottle(userchoise);
+        }
+        else if (userchoise == 3)
+        {dispenser.returnMoney();}
+        else if (userchoise == 4)
+        {dispenser.listBottles();}
         }
     }
-    
-    //päälooppi
-    public void mainMenu()
+    public static int mainMenu()
     {
-        int choise =-1;
         System.out.println();
-        System.out.println("*** PANKKIJÄRJESTELMÄ ***");
-        System.out.println("1) Lisää tavallinen tili");
-        System.out.println("2) Lisää luotollinen tili");
-        System.out.println("3) Tallenna tilille rahaa");
-        System.out.println("4) Nosta tililtä");
-        System.out.println("5) Poista tili");
-        System.out.println("6) Tulosta tili");
-        System.out.println("7) Tulosta kaikki tilit");
+        System.out.println("*** LIMSA-AUTOMAATTI ***");
+        System.out.println("1) Lisää rahaa koneeseen");
+        System.out.println("2) Osta pullo");
+        System.out.println("3) Ota rahat ulos");
+        System.out.println("4) Listaa koneessa olevat pullot");
         System.out.println("0) Lopeta");
-        System.out.print("Valintasi: ");
-        choise = Integer.parseInt(getChoise());
-        switch (choise) {
-            case 1:
-                bank.addAccount(1);
-                break;
-            case 2:
-                bank.addAccount(2);
-                break;
-            case 3:
-                bank.addMoney();
-                break;
-            case 4:
-                bank.withdrawMoney();
-                break;
-            case 5:
-                bank.deleteAccount();
-                break;
-            case 6:
-                bank.printAccounts(1);
-                break;
-            case 7:
-                bank.printAccounts(2);
-                break;
-            case 0:
-                System.exit(0);
-            default:
-                System.out.println("Valinta ei kelpaa.");
-                break;
-        }
-        
-    }
-    
-    public String getChoise()
-    {
-        try{
-        return br.readLine();
-        }
-        catch(IOException ex)
+        String temp_string = "";
+        while (temp_string == "")
         {
-            ex.printStackTrace();
-            return "";
+            temp_string = getInput();
+            Scanner tempsc = new Scanner(temp_string);
+            if (tempsc.hasNextInt())
+            {
+                int temp_int = Integer.parseInt(temp_string);
+                if (temp_int == 1 || temp_int == 2 || temp_int == 3 || temp_int == 4 || temp_int == 0)
+                {
+                    break;
+                }
+            }
+            else 
+            {
+                    temp_string = "";
+                    System.out.print("Virheellinen valinta. Valitse uudelleen: ");
+            } 
         }
+        return Integer.parseInt(temp_string);
     }
-
-        
+    public static String getInput()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Valintasi: ");
+        String temp_string = sc.nextLine().trim();
+        return temp_string;
+    }
 }
-*/
