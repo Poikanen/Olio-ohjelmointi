@@ -41,14 +41,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Slider moneySlider;
         
-    BottleDispenser d = BottleDispenser.getInstance();
-//    ObservableList<Bottle> cb;
+    BottleDispenser d;
+    ReadAndWriteIO io;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         d = BottleDispenser.getInstance();
-//        cb.addAll(d.getBottleArray());
-//        bottleDisplay.setItems(cb);
+        io = new ReadAndWriteIO ();
         updateCombo();
     }
     @FXML
@@ -78,5 +77,11 @@ public class FXMLDocumentController implements Initializable {
     {
         bottleDisplay.getItems().removeAll(bottleDisplay.getItems());
         bottleDisplay.getItems().addAll(d.getBottleArray());
+    }
+
+    @FXML
+    private void printReceipt(ActionEvent event) {
+        io.writeFile(d.getReceipt(), "output.txt");
+        outputField.setText("Kuitti tulostettu!\n"+outputField.getText());
     }
 }

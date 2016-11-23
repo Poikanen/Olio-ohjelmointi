@@ -15,11 +15,12 @@ public class BottleDispenser {
     private static BottleDispenser instance = null;
     private static double money;
     private static ArrayList<Bottle> bottle_array;
+    private static String receipt;
     
     private BottleDispenser () 
     {
         money = 0.0;
-        
+        receipt ="****KUITTI****";
         bottle_array = new ArrayList();
         bottle_array.add(new Bottle("Pepsi", "Pepsi Max", 0.5, 0.5, 1.8));
         bottle_array.add(new Bottle("Pepsi", "Pepsi Max", 0.5, 1.5, 2.2));
@@ -49,6 +50,7 @@ public class BottleDispenser {
             money -= b.getPrice();
             String tmp = "KACHUNK! "+b.getName()+" tipahti masiinasta!\n";
             bottle_array.remove(b);
+            writeReceipt(b);
             return tmp;
         }
         else if (bottle_array.size() == 0)
@@ -87,5 +89,16 @@ public class BottleDispenser {
     public static ArrayList getBottleArray()
     {
         return bottle_array;
+    }
+    private static void writeReceipt(Bottle b) {
+         receipt = "****KUITTI****\n"
+                 + "OSTOS: "
+                 + b.getName()+" "+ b.getVolume() +"l"
+                 + "\nHINTA: "
+                 + b.getPrice() + "€";
+    }
+    public static String getReceipt()
+    {
+        return receipt;
     }
 }
