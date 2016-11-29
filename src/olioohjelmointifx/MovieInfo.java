@@ -12,7 +12,9 @@ import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -30,18 +32,20 @@ import org.xml.sax.SAXException;
  * @author tommi
  */
 public class MovieInfo {
-    private ArrayList<Theater> theaters;
+    private List<Theater> theaters;
     private final URL url;
+    private URL moviesUrl;
     private Document doc;
     
     public MovieInfo() throws MalformedURLException
     {
         theaters = new ArrayList<Theater>();
         url = new URL("http://www.finnkino.fi/xml/TheatreAreas/");
-        buildDBF();
+        
+        buildDBF(url);
         getCurrentData();
     }
-    private void buildDBF()
+    private void buildDBF(URL url)
     {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -84,6 +88,28 @@ public class MovieInfo {
             System.out.println(theaters.get(i).getMapValue("Name") +" "+theaters.get(i).getMapValue("ID"));
        }
     }
+    protected List getMoviesDate(String area, String date)
+    {
+        List content = new ArrayList();
+        try {
+            moviesUrl = new URL("http://www.finnkino.fi/xml/Schedule/?area="+area+"&dt="+date);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(MovieInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        buildDBF(moviesUrl);
+        NodeList nodes = doc.getElementsByTagName("Show");
+        for (int i = 0; i < nodes.getLength(); i++)
+        {
+            Node node = nodes.item(i);
+            Element e = (Element)node;
+            content.add(getValue("Title",e)
+                    + " " +getValue("dttmShowStart",e)
+                    + "\n");
+       }
+       System.out.println(content.toString());
+       Collections.sort(content, String.CASE_INSENSITIVE_ORDER);
+       return content;
+    }
     protected String getValue(String tag, Element e,String attr)
     {
         return ((Element)e.getElementsByTagName(tag).item(0)).getAttribute(attr);
@@ -93,7 +119,7 @@ public class MovieInfo {
         return ((Element)e.getElementsByTagName(tag).item(0)).getTextContent();
     }
 
-    public ArrayList<Theater> getTheaters() {
+    public List<Theater> getTheaters() {
         return theaters;
     }
     
