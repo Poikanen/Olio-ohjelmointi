@@ -35,6 +35,10 @@ public class FXMLDocumentController implements Initializable {
     private Button listByDateButton;
     @FXML
     private ListView<?> listField;
+    @FXML
+    private TextField startTimeField;
+    @FXML
+    private TextField endTimeField;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -54,23 +58,18 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void listByDate(ActionEvent event) {
-        listField.getItems().addAll(mi.getMoviesDate(combo.getValue().getMapValue("ID"), dateField.getText()));
+        listField.getItems().clear();
+        listField.getItems().addAll(mi.getMoviesDate(combo.getValue().getMapValue("ID"),
+                dateField.getText(),
+                startTimeField.getText(),
+                endTimeField.getText()));
         System.out.println(combo.getValue().getMapValue("ID"));
         System.out.println(dateField.getText());
     }
-    
-//    private String parseDate()
-//    {
-//        String[] date;
-//        String dateString ="";
-//        if (dateField.getText() != null)
-//        {
-//            date= dateField.getText().split(".");
-//            for (int i=0; i < date.length; i++)
-//            {
-//            }
-//        }
-//        return dateString;
-//    }
+
+    @FXML
+    private void listByName(ActionEvent event) {
+        mi.parseTime("15.14");
+    }
     
 }
