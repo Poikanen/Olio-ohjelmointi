@@ -54,8 +54,8 @@ public class MovieInfo {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(new InputSource(new StringReader(readURL(url))));
             doc.getDocumentElement().normalize();
-        } catch (SAXException | IOException | ParserConfigurationException ex) {
-            Logger.getLogger(TheaterXML.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            Logger.getLogger(MovieInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     private String readURL (URL url)
@@ -87,22 +87,74 @@ public class MovieInfo {
             Element e = (Element)node;
             theater.setMapValue("ID", getValue("ID",e));
             theater.setMapValue("Name", getValue("Name",e));
-            System.out.println(theaters.get(i).getMapValue("Name") +" "+theaters.get(i).getMapValue("ID"));
+//            System.out.println(theaters.get(i).getMapValue("Name") +" "+theaters.get(i).getMapValue("ID"));
        }
     }
-    protected List getMoviesDate(String area, String date,String starttime, String endtime)
+    protected List getMoviesName(String area, String name, String date,String starttime, String endtime) throws Exception
+    {
+        List content = new ArrayList();
+        List temp = new ArrayList();
+        if (date.isEmpty()){date = getDateString();}
+        // Kommentoitu on hieman toistoa, mutta tehdään, jotta saadaan tulosteeseen oikea nimi ja päivämäärä
+        setURL(date, theaters.get(0).getMapValue("ID"));
+        buildDBF(moviesUrl);
+        temp.add(parseByName(parseByTime(new String(),new String()),name).get(0));
+        content.add("**** "+getValue("Title",(Element)temp.get(0))+ " **** "+parseURLDate(getValue("dttmShowStart",(Element)temp.get(0)))+ " ****");
+        //
+        for (int i = 1 ; i < theaters.size() ; i++)
+        {
+            if (area.equals(theaters.get(0).getMapValue("ID")))
+            {
+                setURL(date, theaters.get(i).getMapValue("ID"));
+                buildDBF(moviesUrl);
+                temp.clear();
+                temp.addAll(parseToString(parseByName(parseByTime(starttime,endtime),name)));
+                Collections.sort(temp, String.CASE_INSENSITIVE_ORDER);
+                content.add("**** "+theaters.get(i).getMapValue("Name")+" ****");
+                content.addAll(temp);
+            }
+            else if (area.equals(theaters.get(i).getMapValue("ID")))
+            {
+                setURL(date, area);
+                buildDBF(moviesUrl);
+                temp.clear();
+                temp.addAll(parseToString(parseByName(parseByTime(starttime,endtime),name)));
+                Collections.sort(temp, String.CASE_INSENSITIVE_ORDER);
+                content.add("**** "+theaters.get(i).getMapValue("Name")+" ****");
+                content.addAll(temp);
+                return content;
+            }
+        }
+        return content;
+    }
+    protected List getMoviesDate(String area, String date,String starttime, String endtime) throws Exception
     {
         // Jos päivämäärää ei ole syötetty
         if (date.isEmpty()){date = getDateString();}
-        // Palautettava lista content ja Elementtien käsittelylista temp
         List content = new ArrayList();
-        List temp = new ArrayList();
+        Element temp;
+        setURL(date, area);
+        buildDBF(moviesUrl);
+        // Päivämäärä otsikoksi
+        temp = ((Element)(parseByTime(new String(),new String())).get(0));
+        content.add("**** " +parseURLDate(getValue("dttmShowStart",temp))+ " ****");
+        // Lisätään palautettavaan listaan jäljellä olevat Elementit
+        content.addAll(parseToString(parseByTime(starttime,endtime)));
+       // Järjestellään lista aikajärjestykseen(/aakkosjärjestykseen)
+       Collections.sort(content, String.CASE_INSENSITIVE_ORDER);
+       return content;
+    }
+    protected void setURL(String date, String area)
+    {
         try {
             moviesUrl = new URL("http://www.finnkino.fi/xml/Schedule/?area="+area+"&dt="+date);
         } catch (MalformedURLException ex) {
             Logger.getLogger(MovieInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        buildDBF(moviesUrl);
+    }
+    protected List parseByTime(String starttime, String endtime)
+    {
+        List temp = new ArrayList();
         NodeList nodes = doc.getElementsByTagName("Show");
         // NodeListin sisältö käsittelylistaan
         for (int i = 0; i < nodes.getLength(); i++)
@@ -119,17 +171,35 @@ public class MovieInfo {
             {temp.remove(i);i--;}
             i++;
         }
-        // Lisätään palautettavaan listaan jäljellä olevat Elementit
-        for (i = 0; i < temp.size(); i++)
+        return temp;
+    }
+    protected List parseByName(List temp,String name)
+    {
+        int i =0;
+        // Poistetaan käsittelylistasta kaikki jotka eivät vastaa nimeä
+        while (i < temp.size())
         {
-            Element e = (Element)temp.get(i);
-            content.add(parseURLTime(getValue("dttmShowStart",e)).toString()
+            if (!name.isEmpty() && !getValue("Title",(Element)temp.get(i)).toLowerCase().contains(name))
+            {
+                temp.remove(i);
+                i--;
+            }
+            i++;
+        }
+        return temp;
+    }
+    protected List parseToString(List content)
+    {
+        for (int i = 0; i < content.size(); i++)
+        {
+            Element e = (Element)content.get(i);
+            content.add(i,parseURLTime(getValue("dttmShowStart",e)).toString()
                     + " " + getValue("Title",e)
+                    + " - " + getValue("Theatre",e)
                     + "\n");
+            content.remove(i+1);
        }
-       // Järjestellään lista aikajärjestykseen(/aakkosjärjestykseen)
-       Collections.sort(content, String.CASE_INSENSITIVE_ORDER);
-       return content;
+        return content;
     }
     protected LocalDate parseURLDate(String source)
     {
@@ -149,14 +219,14 @@ public class MovieInfo {
         if (input.contains(":")){
         format = DateTimeFormatter.ofPattern("HH:mm");}
         LocalTime time = LocalTime.parse(input, format);
-        System.out.println(time);
+//        System.out.println(time);
         return time; 
     }
     protected String getDateString()
     {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String date = LocalDate.now().format(format);
-        System.out.println(date);
+//        System.out.println(date);
         return date;
     }
     protected String getValue(String tag, Element e,String attr)

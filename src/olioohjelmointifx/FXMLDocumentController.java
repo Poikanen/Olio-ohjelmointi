@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,13 +33,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField dateField;
     @FXML
-    private Button listByDateButton;
-    @FXML
     private ListView<?> listField;
     @FXML
     private TextField startTimeField;
     @FXML
     private TextField endTimeField;
+    @FXML
+    private TextField nameField;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -58,18 +59,39 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void listByDate(ActionEvent event) {
-        listField.getItems().clear();
-        listField.getItems().addAll(mi.getMoviesDate(combo.getValue().getMapValue("ID"),
-                dateField.getText(),
-                startTimeField.getText(),
-                endTimeField.getText()));
-        System.out.println(combo.getValue().getMapValue("ID"));
-        System.out.println(dateField.getText());
+        try {
+            listField.getItems().clear();
+            listField.getItems().addAll(mi.getMoviesDate(combo.getValue().getMapValue("ID"),
+                    dateField.getText(),
+                    startTimeField.getText(),
+                    endTimeField.getText()));
+            System.out.println("Done.");
+        } catch (Exception ex) {
+            listField.getItems().addAll(getError());
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void listByName(ActionEvent event) {
-        mi.parseTime("15.14");
+        try {
+            listField.getItems().clear();
+            listField.getItems().addAll(mi.getMoviesName(combo.getValue().getMapValue("ID"),
+                    nameField.getText().toLowerCase(),
+                    dateField.getText(),
+                    startTimeField.getText(),
+                    endTimeField.getText()));
+            System.out.println("Done.");
+        } catch (Exception ex) {
+            listField.getItems().addAll(getError());
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private ArrayList getError()
+    {
+        ArrayList error = new ArrayList();
+        error.add("Tapahtui Virhe. Tarkista syötteet.");
+        return error;
     }
     
 }
