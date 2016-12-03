@@ -35,7 +35,26 @@ public class FXMLBrowserController implements Initializable {
 
     @FXML
     private void addressFieldAction(ActionEvent event) {
-        web.getEngine().load("http://"+addressField.getText());
+        if (addressField.getText().equals("index.html"))
+        {
+            web.getEngine().load(getClass().getResource("index.html").toExternalForm());
+        }
+        else web.getEngine().load("http://"+addressField.getText());
+    }
+
+    @FXML
+    private void refreshAction(ActionEvent event) {
+        web.getEngine().reload();
+    }
+
+    @FXML
+    private void shoutOutAction(ActionEvent event) {
+        web.getEngine().executeScript("document.shoutOut()");
+    }
+
+    @FXML
+    private void restoreAction(ActionEvent event) {
+        web.getEngine().executeScript("initialize()");
     }
     
     
