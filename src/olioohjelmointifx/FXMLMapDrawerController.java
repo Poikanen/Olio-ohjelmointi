@@ -33,8 +33,9 @@ public class FXMLMapDrawerController implements Initializable {
 
     @FXML
     private void drawPoint(MouseEvent event) {
-        Circle circle = new Circle(event.getSceneX(),event.getSceneY(),5d);
-        panelView.getChildren().add(circle);
+        Point point = new Point("piste",event);
+        panelView.getChildren().add(point.getCircle());
     }
+    
     
 }
