@@ -20,7 +20,11 @@ public class OlioOhjelmointiFX extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         //Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLBrowser.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("FXMLBrowser.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLMapDrawer.fxml"));
+        
+        root.setStyle("-fx-background-image:"
+                + "url('" + getClass().getResource("Suomen-kartta.jpg").toExternalForm() +"')");
         
         Scene scene = new Scene(root);
         
