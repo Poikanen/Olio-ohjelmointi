@@ -6,6 +6,8 @@
 package olioohjelmointifx;
 
 import java.util.ArrayList;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 
 /**
  *
@@ -13,9 +15,11 @@ import java.util.ArrayList;
  */
 public class ShapeHandler {
     private static ShapeHandler instance = null;
-    private ArrayList<Point> points = new ArrayList();
-    private Point startPoint = null;
-    private Point endPoint = null;
+    private ArrayList<Point> points = new ArrayList<Point>();
+    private Circle startPoint = null;
+    private Circle endPoint = null;
+    private Line line = null;
+    private Boolean pointClicked = false;
     
     protected ShapeHandler () {}
     
@@ -32,20 +36,36 @@ public class ShapeHandler {
         return points;
     }
 
-    public Point getStartPoint() {
+    public Circle getStartPoint() {
         return startPoint;
     }
 
-    public void setStartPoint(Point startPoint) {
+    public void setStartPoint(Circle startPoint) {
         this.startPoint = startPoint;
     }
 
-    public Point getEndPoint() {
+    public Circle getEndPoint() {
         return endPoint;
     }
 
-    public void setEndPoint(Point endPoint) {
+    public void setEndPoint(Circle endPoint) {
         this.endPoint = endPoint;
+    }
+
+    public Line getLine() {
+        return line;
+    }
+
+    public void setLine(Line line) {
+        this.line = line;
+    }
+
+    public Boolean isPointClicked() {
+        return pointClicked;
+    }
+
+    public void isPointClicked(Boolean pointClicked) {
+        this.pointClicked = pointClicked;
     }
     
     

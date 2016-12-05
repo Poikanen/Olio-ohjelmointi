@@ -5,10 +5,10 @@
  */
 package olioohjelmointifx;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 
 /**
  *
@@ -17,6 +17,7 @@ import javafx.scene.shape.Circle;
 public class Point {
     private String name;
     private Circle circle;
+    ShapeHandler sh = ShapeHandler.getInstance();
     
     public Point()
     {
@@ -29,24 +30,34 @@ public class Point {
         name = n;
         circle = c;
         setHandle();
+        sh.getPoints().add(this);
     }
     
     private void setHandle()
     {
-        circle.setOnMouseClicked(new EventHandler<MouseEvent>()
+        circle.setOnMousePressed(new EventHandler<MouseEvent>()
                 {
                     ShapeHandler sh = ShapeHandler.getInstance();
                     public void handle(MouseEvent me)
                     {
+                        sh.isPointClicked(Boolean.TRUE);
                         if (sh.getStartPoint() == null)
                         {
-                            sh.setStartPoint(new Point("alku",(Circle)me.getSource()));
-                            System.out.println(sh.getStartPoint().getName());
+                            sh.setStartPoint(circle);
+                            //System.out.println(circle.toString());
                         }
                         else if (sh.getEndPoint() == null)
                         {
-                            sh.setEndPoint(new Point("loppu",(Circle)me.getSource()));
-                            System.out.println(sh.getEndPoint().getName());
+                            sh.setEndPoint((Circle)me.getSource());
+                            Line line = new Line();
+                            line.setStartX(sh.getStartPoint().getCenterX());
+                            line.setStartY(sh.getStartPoint().getCenterY());
+                            line.setEndX(sh.getEndPoint().getCenterX());
+                            line.setEndY(sh.getEndPoint().getCenterY());
+                            sh.setEndPoint(null);
+                            sh.setStartPoint(null);
+                            sh.setLine(line);
+                            
                         }
                         System.out.println("Hei, olen "+name+"!");
                     }
