@@ -36,7 +36,7 @@ public class FXMLMapDrawerController implements Initializable {
         setHandle();
     }    
     
-    @FXML
+    /*@FXML
     private void drawPoint(MouseEvent event) {
         if (!sh.isPointClicked())
         {
@@ -46,7 +46,7 @@ public class FXMLMapDrawerController implements Initializable {
         updateMap();
         sh.isPointClicked(false);
         
-    }
+    }*/
     
     private void setHandle()
     {
@@ -77,9 +77,10 @@ public class FXMLMapDrawerController implements Initializable {
         {
             panelView.getChildren().add(((Point)(itr.next())).getCircle());
         }
-        if (sh.getLine() != null)
+        itr = sh.getLines().iterator();
+        while (itr.hasNext())
         {
-            panelView.getChildren().add(sh.getLine());
+            panelView.getChildren().add((Line)itr.next());
         }
     }
 }

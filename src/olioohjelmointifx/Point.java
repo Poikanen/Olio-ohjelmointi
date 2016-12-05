@@ -56,7 +56,7 @@ public class Point {
                             line.setEndY(sh.getEndPoint().getCenterY());
                             sh.setEndPoint(null);
                             sh.setStartPoint(null);
-                            sh.setLine(line);
+                            sh.getLines().add(line);
                             
                         }
                         System.out.println("Hei, olen "+name+"!");

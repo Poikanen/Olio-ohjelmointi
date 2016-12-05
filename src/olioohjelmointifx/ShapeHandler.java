@@ -16,9 +16,9 @@ import javafx.scene.shape.Line;
 public class ShapeHandler {
     private static ShapeHandler instance = null;
     private ArrayList<Point> points = new ArrayList<Point>();
+    private ArrayList<Line> lines = new ArrayList<Line>();
     private Circle startPoint = null;
     private Circle endPoint = null;
-    private Line line = null;
     private Boolean pointClicked = false;
     
     protected ShapeHandler () {}
@@ -52,20 +52,16 @@ public class ShapeHandler {
         this.endPoint = endPoint;
     }
 
-    public Line getLine() {
-        return line;
-    }
-
-    public void setLine(Line line) {
-        this.line = line;
-    }
-
     public Boolean isPointClicked() {
         return pointClicked;
     }
 
     public void isPointClicked(Boolean pointClicked) {
         this.pointClicked = pointClicked;
+    }
+
+    public ArrayList<Line> getLines() {
+        return lines;
     }
     
     
