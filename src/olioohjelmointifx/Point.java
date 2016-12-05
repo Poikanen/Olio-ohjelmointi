@@ -15,8 +15,8 @@ import javafx.scene.shape.Circle;
  * @author tommi
  */
 public class Point {
-    String name;
-    Circle circle;
+    private String name;
+    private Circle circle;
     
     public Point()
     {
@@ -24,10 +24,10 @@ public class Point {
         circle = new Circle();
         setHandle();
     }
-    public Point(String n, MouseEvent e)
+    public Point(String n, Circle c)
     {
         name = n;
-        circle = new Circle(e.getSceneX(),e.getSceneY(),5d);
+        circle = c;
         setHandle();
     }
     
@@ -35,8 +35,19 @@ public class Point {
     {
         circle.setOnMouseClicked(new EventHandler<MouseEvent>()
                 {
+                    ShapeHandler sh = ShapeHandler.getInstance();
                     public void handle(MouseEvent me)
                     {
+                        if (sh.getStartPoint() == null)
+                        {
+                            sh.setStartPoint(new Point("alku",(Circle)me.getSource()));
+                            System.out.println(sh.getStartPoint().getName());
+                        }
+                        else if (sh.getEndPoint() == null)
+                        {
+                            sh.setEndPoint(new Point("loppu",(Circle)me.getSource()));
+                            System.out.println(sh.getEndPoint().getName());
+                        }
                         System.out.println("Hei, olen "+name+"!");
                     }
                 });

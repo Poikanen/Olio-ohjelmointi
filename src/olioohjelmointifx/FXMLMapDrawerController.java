@@ -23,17 +23,19 @@ public class FXMLMapDrawerController implements Initializable {
 
     @FXML
     private AnchorPane panelView;
+    private ShapeHandler sh;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        sh = ShapeHandler.getInstance();
     }    
 
     @FXML
     private void drawPoint(MouseEvent event) {
-        Point point = new Point("piste",event);
+        Point point = new Point("piste",new Circle(event.getSceneX(),event.getSceneY(),5d));
+        sh.getPoints().add(point);
         panelView.getChildren().add(point.getCircle());
     }
     
