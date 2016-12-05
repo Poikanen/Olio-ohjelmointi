@@ -21,7 +21,7 @@ public class Point {
     
     public Point()
     {
-        name = "piste";
+        name = "";
         circle = new Circle();
         setHandle();
     }
@@ -68,6 +68,10 @@ public class Point {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public Circle getCircle() {
         return circle;
     }
